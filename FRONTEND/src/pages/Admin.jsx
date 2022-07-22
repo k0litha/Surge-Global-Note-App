@@ -1,6 +1,4 @@
-import React from 'react'
-import { useState } from 'react'
-//import {ToatContainer,toast} from "react-toastify"
+import React,{useState} from 'react'
 import axios from "axios"
 
 export default function Admin() {
@@ -13,7 +11,17 @@ export default function Admin() {
 const handleSubmit= async(e) => {
   e.preventDefault();
   try{
-    const {data} =await axios.post("http://localhost:3000/admin",{...values});
+    const {data} =await axios.post("http://localhost:4000/admin",{...values},
+    {withCredentials: true,});
+
+    console.log(data);
+    if(data){
+      if(data.errors){
+
+      }else{
+        
+      }
+    }
 
   }catch(err){
     console.log(err);

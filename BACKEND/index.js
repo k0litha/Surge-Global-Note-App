@@ -1,15 +1,15 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose =require("mongoose");
-
+const authRoutes = require("./Routes/AuthRoutes");
 const app = express();
+const cookieParser =require("cookie-parser");
 
-
-app.listen(400,()=>{
+app.listen(4000,()=>{
     console.log("port 4000 server started")
 });
 
-mongoose.connect("mongodb://localhost:27017/note",{
+mongoose.connect("mongodb://localhost:27017/noteDB",{
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
@@ -25,3 +25,7 @@ app.use(cors({
     methods: ["GET","POST"],
     credentials: true,
 }));
+
+app.use(cookieParser());
+app.use(express.json());
+app.use("/",authRoutes);
