@@ -31,9 +31,8 @@ export default function Admin() {
       console.log(data);
       if (data) {
         if (data.errors) {
-          const { email, password } = data.errors;
+          const { email} = data.errors;
           if (email) generateError(email);
-          else if (password) generateError(password);
         } else {
           window.location.reload(false);
         }
@@ -60,10 +59,6 @@ export default function Admin() {
           <div>
             <label htmlFor='email'>Email</label>
             <input type="email" name="email" placeholder="Email" onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })} />
-          </div>
-          <div>
-            <label htmlFor='password'>Password</label>
-            <input type="password" name="password" placeholder="Password" onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })} />
           </div>
 
           <div>

@@ -16,8 +16,11 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "generate-password": "^1.7.0",
     "jsonwebtoken": "^8.5.1",
+    "mailgun-js": "^0.22.0",
     "mongoose": "^6.4.6",
+    "nodemailer": "^6.7.7",
     "nodemon": "^2.0.19"
   }
 }
