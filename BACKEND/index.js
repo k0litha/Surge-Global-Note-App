@@ -1,9 +1,16 @@
 const express = require("express");
+require('dotenv').config();
 const cors = require("cors");
 const mongoose =require("mongoose");
 const authRoutes = require("./Routes/AuthRoutes");
 const app = express();
 const cookieParser =require("cookie-parser");
+const dotenv = require('dotenv');
+dotenv.config();
+
+
+
+
 
 app.listen(4000,()=>{
     console.log("port 4000 server started")
