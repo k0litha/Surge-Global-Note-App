@@ -12,17 +12,38 @@ const userSchema =new mongoose.Schema({
     },
     accountType: {
         type: String,
-        required: [true, "Password is required"],
     },
     status: {
         type: Boolean,
+    },
+    phone: {
+        type: String,
+        required: [true, "Phone number is required"],
+    },
+    firstName: {
+        type: String,
+        required: [true, "First name is required"],
+    },
+    lastName: {
+        type: String,
+        required: [true, "Last name is required"],
+    },
+    dateOfBirth: {
+        type: Date,
+        required: [true, "Birth date is required"],
     }
+
     
 });
 
 userSchema.pre("save", async function(next){
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt);
+    next();
+});
+userSchema.pre("findOneAndUpdate", async function(next){
+    const salt = await bcrypt.genSalt();
+    this._update.password = await bcrypt.hash(this._update.password, salt);
     next();
 });
 

@@ -26,7 +26,7 @@ export default function Admin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("http://localhost:4000/register", { ...values },
+      const { data } = await axios.post("http://localhost:4000/createuser", { ...values },
         { withCredentials: true, });
       console.log(data);
       if (data) {
@@ -67,7 +67,7 @@ export default function Admin() {
           </div>
         </form>
         <button onClick={logOut}>logout</button>
-      </div>
+      </div> 
 
     </>
   )

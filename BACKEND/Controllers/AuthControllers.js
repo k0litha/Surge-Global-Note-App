@@ -44,39 +44,36 @@ function passwordGen() {
 
 
 
-function sendmail(email,password) {
+function sendmail(email, password) {
     const nodemailer = require("nodemailer");
     var transport = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
         port: process.env.EMAIL_PORT,
         auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
         }
-      });
-      const mailOptions = {
-        from: '"Note Service" <note@surgeglobal.com>', 
-        to: email, 
-        subject: 'Note Service Login', 
+    });
+    const mailOptions = {
+        from: '"Note Service" <note@surgeglobal.com>',
+        to: email,
+        subject: 'Note Service Login',
         text: password,
-   };
-   
-   transport.sendMail(mailOptions, function(err, info) {
-       if (err) {
-         console.log(err)
-       } else {
-         console.log(info);
-       }
-   });
+    };
+
+    transport.sendMail(mailOptions, function (err, info) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log(info);
+        }
+    });
 }
 
 
 
+module.exports.createUser = async (req, res) => {
 
-module.exports.regist = async (req, res, next) => { };
-
-module.exports.register = async (req, res, next) => {
-   
     try {
         const status = 0;
         const password = passwordGen();
@@ -84,17 +81,17 @@ module.exports.register = async (req, res, next) => {
         const { email } = req.body;
         const user = await UserModel.create({ email, password, accountType, status });
         res.status(201).json({ user: user._id, created: true });
-        sendmail(email,password);
+        sendmail(email, password);
     } catch (error) {
         console.log(error);
         const errors = handleErrors(error);
         res.json({ errors, created: false });
 
-}
+    }
 };
 
 
-module.exports.login = async (req, res, next) => {
+module.exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await UserModel.login(email, password);
@@ -116,10 +113,11 @@ module.exports.login = async (req, res, next) => {
 
 
 
-module.exports.getUser = async (req, res, next) => {
+module.exports.getAllUser = async (req, res) => {
     try {
         const users = await UserModel.find({ accountType: 'student' });
         res.status(200).json({ success: true, users });
+
 
     } catch (error) {
         console.log(error);
@@ -128,3 +126,16 @@ module.exports.getUser = async (req, res, next) => {
     }
 };
 
+
+exports.userUpdate = async (req, res) => {
+    const { id } = req.params;
+    //const user = await UserModel.findOne({ _id: id });
+    //  if (!user)
+    //  console.log("no user")
+
+    const userUpdated = await UserModel.findOneAndUpdate({ _id: id }, req.body, {
+        upsert: true,
+    });
+    res.status(200).json({ success: true, userUpdated });
+
+};

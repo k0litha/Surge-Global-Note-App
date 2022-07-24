@@ -1,17 +1,16 @@
-const { login, register } = require("../Controllers/AuthControllers");
+const { login, createUser, getAllUser, userUpdate } = require("../Controllers/AuthControllers");
 const { checkUser } = require("../Middlewares/AuthMiddlewares");
 
 const router = require("express").Router();
 
 
 
-router.post("/admin",register);
+router.get("/allusers",checkUser,getAllUser);
 
-router.post("/",checkUser);
-router.post("/userreg",checkUser);
+router.post("/userReg/:id",checkUser,userUpdate);
 
 router.post("/login",login);
-router.post("/register",checkUser,register);
+router.post("/createuser",checkUser,createUser );
 
 
 module.exports =router;
