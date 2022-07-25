@@ -3,6 +3,7 @@ require('dotenv').config();
 const cors = require("cors");
 const mongoose =require("mongoose");
 const authRoutes = require("./Routes/AuthRoutes");
+const noteRoutes = require("./Routes/NoteRoutes");
 const app = express();
 const cookieParser =require("cookie-parser");
 const dotenv = require('dotenv');
@@ -36,3 +37,4 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.json());
 app.use("/",authRoutes);
+app.use("/",noteRoutes);

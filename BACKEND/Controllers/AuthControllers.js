@@ -57,7 +57,7 @@ function sendmail(email, password) {
         from: '"Note Service" <note@surgeglobal.com>',
         to: email,
         subject: 'Note Service Login',
-        text: password,
+        text: `Email: ${email} | password: ${password} | Login Link: http://localhost:3000/`,
     };
 
     transport.sendMail(mailOptions, function (err, info) {

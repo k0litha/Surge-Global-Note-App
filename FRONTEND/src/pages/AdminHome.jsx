@@ -34,9 +34,12 @@ export default function AdminHome() {
 
 
     } catch (error) {
-      console.error(error);
+      if (error.message.includes("401") || error.message.includes("403")) {
+        window.location.replace = 'http://localhost:4000/logout';
+        return false;
     }
   }
+}
 
   const nextPage = () => {
 
@@ -80,8 +83,8 @@ export default function AdminHome() {
         {
           users.map(user =>
             <tr key={user._id} >
-              <td>{user.firstname}</td>
-              <td>{user.lastname}</td>
+              <td>{user.firstName}</td>
+              <td>{user.lastName}</td>
               <td>{user.email}</td>
               <td>{user.phone}</td>
               <td>{user.dateOfBirth}</td>

@@ -30,8 +30,9 @@ export default function Notes() {
       <Navbar bg="dark" variant="dark">
       <Container>
         <Navbar.Brand >Note App | Notes</Navbar.Brand>
-        <Nav defaultActiveKey="/Notes" className="me-auto">
-          <Nav.Link href="/Notes">My notes</Nav.Link>
+        <Nav defaultActiveKey="/notes" className="me-auto">
+          <Nav.Link href="/notes">My notes</Nav.Link>
+          <Nav.Link href="/notes/create">Create note</Nav.Link>
           <Nav.Link onClick={logOut}>Log Out</Nav.Link>
         </Nav>
       </Container>
