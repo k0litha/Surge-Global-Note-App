@@ -1,36 +1,43 @@
 const mongoose =require("mongoose");
 const bcrypt = require("bcrypt");
+const validator = require('validator');
 const userSchema =new mongoose.Schema({
     email: {
         type: String,
         required: [true,"Email is required"],
         unique: true,
+        validate: {
+            validator: validator.isEmail,
+            message: 'Please provide a valid email address',
+          }
     },
     password: {
         type: String,
-        required: [true, "Password is required"],
+
     },
     accountType: {
         type: String,
+        default: 'student',
     },
     status: {
         type: Boolean,
+        default: false,
     },
     phone: {
         type: String,
-        required: [true, "Phone number is required"],
+  
     },
     firstName: {
         type: String,
-        required: [true, "First name is required"],
+   
     },
     lastName: {
         type: String,
-        required: [true, "Last name is required"],
+  
     },
     dateOfBirth: {
         type: Date,
-        required: [true, "Birth date is required"],
+
     }
 
     

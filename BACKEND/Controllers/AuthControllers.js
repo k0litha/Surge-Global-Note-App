@@ -37,8 +37,7 @@ function passwordGen() {
         length: 10,
         numbers: true,
         lowercase: true
-    });
-    console.log(password);
+    });;
     return password;
 }
 
@@ -75,11 +74,9 @@ function sendmail(email, password) {
 module.exports.createUser = async (req, res) => {
 
     try {
-        const status = 0;
         const password = passwordGen();
-        const accountType = "student";
         const { email } = req.body;
-        const user = await UserModel.create({ email, password, accountType, status });
+        const user = await UserModel.create({ email, password });
         res.status(201).json({ user: user._id, created: true });
         sendmail(email, password);
     } catch (error) {
@@ -115,9 +112,30 @@ module.exports.login = async (req, res) => {
 
 module.exports.getAllUser = async (req, res) => {
     try {
-        const users = await UserModel.find({ accountType: 'student' });
-        res.status(200).json({ success: true, users });
+        const { page } = req.params;
+        var newpage = page;
+        const size = 8;
+        const totalRows = await UserModel.countDocuments();
+        const totalPages = Math.ceil(totalRows / size)
 
+        if (page > totalPages) {
+            newpage = totalPages;
+        }
+        if (page < 1) {
+            newpage = 1;
+        }
+
+        const skip = (newpage - 1) * size;
+
+
+
+        const users = await UserModel
+            .find({ accountType: 'student' })
+            .select('-password')
+            .skip(skip)
+            .limit(size);
+
+        res.status(200).json({ pages: { totalPages: totalPages, currentPage: newpage }, users: users });
 
     } catch (error) {
         console.log(error);
@@ -138,4 +156,8 @@ exports.userUpdate = async (req, res) => {
     });
     res.status(200).json({ success: true, userUpdated });
 
+};
+exports.logout = async (req, res) => {
+    res.clearCookie("jwt");
+    res.redirect('http://localhost:3000/');
 };

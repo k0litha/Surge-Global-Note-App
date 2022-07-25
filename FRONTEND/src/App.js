@@ -1,9 +1,11 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from './pages/Login'
-import Admin from './pages/Admin'
+import CreateUser from './pages/CreateUser'
+import AdminHome from './pages/AdminHome'
 import UserReg from './pages/UserReg'
-import Student from './pages/Student'
+import Notes from './pages/Notes'
+import CreateNote from './pages/CreateNote'
 import AdminRoute from './privateroutes/AdminRoute'
 import StudentRoute from './privateroutes/StudentRoute'
 import TempUserRoute from './privateroutes/TempUserRoute'
@@ -13,11 +15,14 @@ export default function App() {
     <BrowserRouter>
     <Routes>
       <Route element={<AdminRoute/>}>
-        <Route element={<Admin/>} path="/admin" exact/>
+        <Route element={<CreateUser/>} path="/admin/create" exact/>
+        <Route element={<AdminHome/>} path="/admin" exact/>
       </Route>
       <Route element={<StudentRoute/>}>
-        <Route element={<Student/>} path="/student" exact/>
+        <Route element={<Notes/>} path="/notes" exact/>
+        <Route element={<CreateNote/>} path="/notes/create" exact/>
       </Route>
+
       <Route element={<TempUserRoute/>}>
         <Route element={<UserReg/>} path="/reg" exact/>
       </Route>

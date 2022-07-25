@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-export default function Admin() {
+export default function CreateNote() {
   const navigate = useNavigate();
 
   const [cookie, removeCookie] = useCookies([]);
@@ -16,8 +16,8 @@ export default function Admin() {
 
 
   const logOut = () => {
-    removeCookie("jwt");
-    navigate('/');
+    window.location.replace = 'http://localhost:4000/logout';
+    return false;
   };
 
 
@@ -40,8 +40,8 @@ export default function Admin() {
 
     } catch (err) {
       if (err.message.includes("401") || err.message.includes("403")) {
-        removeCookie("jwt");
-        navigate('/');
+        window.location.replace = 'http://localhost:4000/logout';
+        return false;
       }
     }
   };
@@ -53,7 +53,7 @@ export default function Admin() {
     <>
       <div><Toaster position="top-center" reverseOrder={false} /></div>
       <div>
-        <h2>Admin</h2>
+        <h2>CreateUser</h2>
 
         <form onSubmit={(e) => handleSubmit(e)}>
           <div>

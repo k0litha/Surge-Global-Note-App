@@ -15,22 +15,23 @@ export default function UserReg() {
   const decoded = jwt_decode(token)
     
   const logOut = () => {
-    removeCookie("jwt");
-    navigate('/');
+    window.location.replace('http://localhost:4000/logout');
+    return false;
   };
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {console.log("decoded.id")
+    try {
       const { data } = await axios.post(`http://localhost:4000/userReg/${decoded.id}`, { ...values },
         { withCredentials: true, });
-        removeCookie("jwt");
-        navigate('/');
+        console.log(data);
+        window.location.replace('http://localhost:4000/logout');
+        return false;
     } catch (err) {
       if (err.message.includes("401") || err.message.includes("403")) {
-        removeCookie("jwt");
-        navigate('/');
+        window.location.replace('http://localhost:4000/logout');
+        return false;
       }
     }
   };

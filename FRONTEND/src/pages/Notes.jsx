@@ -6,7 +6,7 @@ import { Toaster, toast } from "react-hot-toast"
 
 
 
-export default function Student() {
+export default function Notes() {
   const navigate = useNavigate();
 
   const [cookies, setCookies, removeCookie] = useCookies([]);
