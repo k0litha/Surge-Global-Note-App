@@ -79,7 +79,7 @@ export default function AdminHome() {
       <tbody>
         {
           users.map(user =>
-            <tr key={user._id}>
+            <tr key={user._id} >
               <td>{user.firstname}</td>
               <td>{user.lastname}</td>
               <td>{user.email}</td>

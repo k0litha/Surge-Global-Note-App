@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react'
 import axios from "axios"
 import { Toaster, toast } from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
-import { useCookies } from "react-cookie";
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import Button from 'react-bootstrap/Button';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -40,6 +43,16 @@ export default function Login() {
   return (
     <>
       <div><Toaster position="top-center" reverseOrder={false} /></div>
+
+      <Navbar bg="dark" variant="dark">
+        <Container>
+          <Navbar.Brand >Note App </Navbar.Brand>
+          <Nav defaultActiveKey="/" className="me-auto">
+            <Nav.Link href="/">Login</Nav.Link>
+
+          </Nav>
+        </Container>
+      </Navbar>
       <div>
         <h2>Login</h2>
 

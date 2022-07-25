@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from 'axios';
 import { Toaster, toast } from "react-hot-toast"
-
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 
 export default function Notes() {
@@ -24,9 +26,17 @@ export default function Notes() {
 
   return (
     <><div><Toaster position="top-center" reverseOrder={false} /></div>
-      <div>Student
-
-        <button onClick={logOut}>logout</button>
+      <div>
+      <Navbar bg="dark" variant="dark">
+      <Container>
+        <Navbar.Brand >Note App | Notes</Navbar.Brand>
+        <Nav defaultActiveKey="/Notes" className="me-auto">
+          <Nav.Link href="/Notes">My notes</Nav.Link>
+          <Nav.Link onClick={logOut}>Log Out</Nav.Link>
+        </Nav>
+      </Container>
+    </Navbar>
+    Notes
       </div>
     </>
   )

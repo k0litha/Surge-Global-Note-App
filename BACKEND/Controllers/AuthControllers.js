@@ -98,7 +98,7 @@ module.exports.login = async (req, res) => {
             httpOnly: false,
             maxAge: maxAge * 1000,
         });
-
+        
         res.status(200).json({ user: user._id, created: true });
     } catch (error) {
         console.log(error);
