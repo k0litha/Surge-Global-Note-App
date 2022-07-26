@@ -2,65 +2,38 @@ import { Modal, Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 
 import axios from "axios";
-function ViewUserModel({ uid }) {
+function ViewUserModel({ uid, firstName, lastName, email, phone, dob, status, accountType }) {
 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const [user, setUser] = useState([]);
 
-    const fetchUser = async () => {
-        try {
-            const result = await axios.get(`http://localhost:4000/getuser/${uid}`, { withCredentials: true, })
-            setUser(result.data.user)
-
-        } catch (error) {
-            if (error.message.includes("401") || error.message.includes("403")) {
-                window.location.replace = 'http://localhost:4000/logout';
-                return false;
-            }
-        }
-    }
-
-
-
-    useEffect(() => {
-        fetchUser(uid)
-    }, [uid])
-
-
-
-
-
+    function  dateConvert(date){
+        return  new Date(date).toLocaleDateString();
+       }
+     
 
     return (
         <>
-
             <Button variant="primary" onClick={handleShow}>
-                View User
+                Full Details
             </Button>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{uid}</Modal.Title>
+                    <Modal.Title>Full User Details</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
 
-                    {
-                        user.map(detail =>
-                            <div key={detail._id}>
-                                <h2>{detail._id}</h2>
-                                <h2>{detail.firstName}</h2>
-                                <h2>{detail.lastName}</h2>
-                                <h2>{detail.email}</h2>
-                                <h2>{detail.phone}</h2>
-                                <h2>{detail.dateOfBirth}</h2>
-                            </div>
 
-                        )
-                    }
-
-
+                    <h4>Email:  {email}</h4>
+                    <h4>First Name:  {firstName}</h4>
+                    <h4>Last Name:  {lastName}</h4>
+                    <h4>ID:  {uid}</h4>
+                    <h4>Phone Number:  {phone}</h4>
+                    <h4>Date of Birth:  {dateConvert(dob)}</h4>
+                    <h4>Activated:  {`${status}`}</h4>
+                    <h4>Account type:  {accountType}</h4>
 
                 </Modal.Body>
                 <Modal.Footer>

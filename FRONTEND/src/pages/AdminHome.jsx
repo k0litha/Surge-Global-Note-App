@@ -57,7 +57,9 @@ export default function AdminHome() {
   }, [page])
 
 
-
+  function  dateConvert(date){
+    return  new Date(date).toLocaleDateString();
+   }
 
   return (<div>
 
@@ -91,9 +93,18 @@ export default function AdminHome() {
               <td>{user.lastName}</td>
               <td>{user.email}</td>
               <td>{user.phone}</td>
-              <td>{user.dateOfBirth}</td>
+              <td>{dateConvert(user.dateOfBirth)}</td>
               <td><div className="container mt-3">
-                <ViewUserModel uid={user._id} />
+                <ViewUserModel
+                 uid={user._id} 
+                 firstName={user.firstName}
+                 lastName={user.lastName}
+                 email={user.email}
+                 phone={user.phone}
+                 dob={user.dateOfBirth}
+                 status={user.status} 
+                 accountType={user.accountType} 
+                />
               </div></td>
 
             </tr>
