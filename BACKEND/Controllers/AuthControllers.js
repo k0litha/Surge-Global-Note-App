@@ -145,16 +145,14 @@ module.exports.getAllUser = async (req, res) => {
 };
 
 
-
-
-module.exports.getUser = async (req, res) => {
+module.exports.userSearch = async (req, res) => {
     try {
-        const { uid } = req.params;
-        const user = await UserModel
-            .find({ _id: uid })
+        const { item } = req.params;
+        const users = await UserModel
+            .find({email: new RegExp(item, 'i')})
             .select('-password')
            
-        res.status(200).json({ user: user });
+        res.status(200).json({ users: users });
 
     } catch (error) {
         console.log(error);
@@ -162,9 +160,6 @@ module.exports.getUser = async (req, res) => {
         res.json({ errors, created: false });
     }
 };
-
-
-
 
 
 

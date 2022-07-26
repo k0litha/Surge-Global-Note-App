@@ -54,12 +54,12 @@ function UpdateNoteModel({ noteid, title, description,updatePage }) {
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
+            <Button variant="primary" size="sm" onClick={handleShow}>
                 Edit
             </Button>
             <Modal show={show} onHide={handleClose} >
                 <Modal.Header closeButton>
-                    <Modal.Title>{noteid}</Modal.Title>
+                    <Modal.Title>{title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
 

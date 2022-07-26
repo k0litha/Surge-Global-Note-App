@@ -38,12 +38,12 @@ function DeleteNoteModel({ noteid, title, description, updatePage }) {
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
+            <Button variant="danger" size="sm" onClick={handleShow}>
                 Delete
             </Button>
             <Modal show={show} onHide={handleClose} >
                 <Modal.Header closeButton>
-                    <Modal.Title>{noteid}</Modal.Title>
+                    <Modal.Title>{title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
 
@@ -59,7 +59,7 @@ function DeleteNoteModel({ noteid, title, description, updatePage }) {
 
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary" size="sm" onClick={handleClose}>
                         Close
                     </Button>
                 </Modal.Footer>

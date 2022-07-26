@@ -13,7 +13,6 @@ function ViewUserModel({ uid, firstName, lastName, email, phone, dob, status, ac
         return  new Date(date).toLocaleDateString();
        }
      
-
     return (
         <>
             <Button variant="primary" onClick={handleShow}>
@@ -24,7 +23,6 @@ function ViewUserModel({ uid, firstName, lastName, email, phone, dob, status, ac
                     <Modal.Title>Full User Details</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-
 
                     <h4>Email:  {email}</h4>
                     <h4>First Name:  {firstName}</h4>

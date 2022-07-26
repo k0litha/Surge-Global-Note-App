@@ -2,11 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from "axios"
 import { Toaster, toast } from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import Button from 'react-bootstrap/Button';
-
+import { Navbar, Table, Button, Container, Nav, Form } from 'react-bootstrap';
 export default function Login() {
   const navigate = useNavigate();
 
@@ -54,23 +50,32 @@ export default function Login() {
         </Container>
       </Navbar>
       <div>
+      
+        <div class="p-5 d-flex justify-content-center">
+       
+        <Form onSubmit={(e) => handleSubmit(e)} style={{ width: '18rem'}}>
         <h2>Login</h2>
-
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div>
-            <label htmlFor='email'>Email</label>
-            <input type="email" name="email" placeholder="Email" onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })} />
-          </div>
-          <div>
-            <label htmlFor='password'>Password</label>
-            <input type="password" name="password" placeholder="Password" onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })} />
-          </div>
-          <div>
-
-            <button type="submit">Submit</button>
-          </div>
-        </form>
-
+          <Form.Group  controlId="formBasicEmail">
+          <br></br>
+            <Form.Label>Email</Form.Label>
+            <Form.Control onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
+              name="email" type="email" placeholder="email" />
+            <Form.Text className="text-muted" > </Form.Text>
+      
+           
+            <Form.Label>Password</Form.Label>
+            <Form.Control onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
+              name="password" type="password" placeholder="password"/>
+            <Form.Text className="text-muted"> </Form.Text>
+     
+          </Form.Group>
+          
+          <br></br>
+          <Button variant="primary" type="submit">
+            Login
+          </Button>
+        </Form>
+        </div>
 
       </div>
     </>

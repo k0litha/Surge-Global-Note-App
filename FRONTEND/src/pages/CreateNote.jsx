@@ -4,32 +4,25 @@ import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from 'jwt-decode';
-import { Navbar, Button,Container,Nav,Form} from 'react-bootstrap';
+import { Navbar, Button, Container, Nav, Form } from 'react-bootstrap';
+
 export default function CreateNote() {
   const navigate = useNavigate();
 
 
   const [cookie] = useCookies([]);
   const token = cookie.jwt;
-  var uid = '';
+  const decoded = jwt_decode(token)
 
-  try {
-    if (token) {
-      const decoded = jwt_decode(token)
-      uid = decoded.id;
-    }
-  } catch (err) {
-    console.log(err);
-  }
 
 
   const [values, setValues] = useState({
-    userid: uid
+    userid: decoded.id
   });
 
   const logOut = () => {
     window.location.replace = 'http://localhost:4000/logout';
-    return false;
+    return null;
   };
 
 
@@ -66,34 +59,42 @@ export default function CreateNote() {
     <>
       <div><Toaster position="top-center" reverseOrder={false} /></div>
       <div>
-      <Navbar bg="dark" variant="dark">
-      <Container>
-        <Navbar.Brand >Note App | Notes</Navbar.Brand>
-        <Nav defaultActiveKey="/notes/create" className="me-auto">
-          <Nav.Link href="/notes">My notes</Nav.Link>
-          <Nav.Link href="/notes/create">Create note</Nav.Link>
-          <Nav.Link onClick={logOut}>Log Out</Nav.Link>
-        </Nav>
-      </Container>
-    </Navbar>
+        <Navbar bg="dark" variant="dark">
+          <Container>
+            <Navbar.Brand >Note App | Notes</Navbar.Brand>
+            <Nav defaultActiveKey="/notes/create" className="me-auto">
+              <Nav.Link href="/notes">My notes</Nav.Link>
+              <Nav.Link href="/notes/create">Create note</Nav.Link>
+              <Nav.Link onClick={logOut}>Log Out ({decoded.email})</Nav.Link>
+            </Nav>
+          </Container>
+        </Navbar>
 
-        <h2>Create Note</h2>
 
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div>
-            <label htmlFor='title'>Title</label>
-            <input type="text" name="title" placeholder="title" onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })} />
-          </div>
-          <div>
-            <label htmlFor='description'>Description</label>
-            <input type="text" name="description" placeholder="description" onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })} />
-          </div>
+        <div class="p-5 d-flex justify-content-center">
 
-          <div>
+          <Form onSubmit={(e) => handleSubmit(e)}>
+            <h2 class="m-1">Create Note</h2>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Title</Form.Label>
+              <Form.Control onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
+                name="title" type="text" placeholder="title" />
+              <Form.Text className="text-muted"> </Form.Text>
 
-            <button type="submit">Submit</button>
-          </div>
-        </form>
+              <Form.Label>Description</Form.Label>
+              <Form.Control onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
+                name="Description" type="text" placeholder="Description " />
+              <Form.Text className="text-muted"> </Form.Text>
+            </Form.Group>
+
+            <Button variant="primary" type="submit">
+              Create
+            </Button>
+          </Form>
+
+        </div>
+
+
       </div>
 
     </>

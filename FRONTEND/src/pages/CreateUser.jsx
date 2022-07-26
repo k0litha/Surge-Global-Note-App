@@ -4,15 +4,15 @@ import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Navbar, Button,Container,Nav,Form} from 'react-bootstrap';
-
+import jwt_decode from 'jwt-decode';
 
 export default function CreateUser() {
 
-  const navigate = useNavigate();
-
-  const [cookie, removeCookie] = useCookies([]);
-
   const [values, setValues] = useState({});
+  const [cookie] = useCookies([]);
+
+  const token = cookie.jwt;
+  const decoded = jwt_decode(token)
 
 
   const logOut = () => {
@@ -55,15 +55,16 @@ export default function CreateUser() {
           <Nav defaultActiveKey="/admin/create" className="me-auto">
             <Nav.Link href="/admin">Home</Nav.Link>
             <Nav.Link href="/admin/create">Create User</Nav.Link>
-            <Nav.Link onClick={logOut}>Log Out</Nav.Link>
+            <Nav.Link onClick={logOut}>Log Out ({decoded.email})</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
 
 
-      <div>
-        <h2>CreateUser</h2>
-        <Form onSubmit={(e) => handleSubmit(e)}>
+      <div class="p-5 d-flex justify-content-center">
+       
+        <Form  onSubmit={(e) => handleSubmit(e)}>
+        <h2 class="m-1">Create User</h2>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}

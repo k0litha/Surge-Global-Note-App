@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from 'axios';
 import { Toaster, toast } from "react-hot-toast"
-import { Navbar, Table, Button, Container, Nav, Card } from 'react-bootstrap';
+import { Navbar, Table, Button, Container, Nav, Card,ButtonGroup } from 'react-bootstrap';
 import UpdateNoteModel from './UpdateNoteModel'
 import DeleteNoteModel from './DeleteNoteModel'
 import jwt_decode from 'jwt-decode';
@@ -12,7 +12,7 @@ import jwt_decode from 'jwt-decode';
 export default function Notes() {
   const navigate = useNavigate();
 
-  const [cookie, setCookies, removeCookie] = useCookies([]);
+  const [cookie] = useCookies([]);
 
   const token = cookie.jwt;
   const decoded = jwt_decode(token)
@@ -29,7 +29,7 @@ export default function Notes() {
 
   const logOut = () => {
     window.location.replace('http://localhost:4000/logout');
-    return false;
+    return null;
   };
 
 
@@ -62,15 +62,15 @@ export default function Notes() {
   }
   const updatePage = (show) => {
     setShow(show)
-}
+  }
 
 
   useEffect(() => {
     fetchNotes(page)
-  }, [page,show])
+  }, [page, show])
 
-  function  dateConvert(date){
-   return  new Date(date).toLocaleDateString();
+  function dateConvert(date) {
+    return new Date(date).toLocaleDateString();
   }
 
 
@@ -89,41 +89,49 @@ export default function Notes() {
             </Nav>
           </Container>
         </Navbar>
-        Notes
+        <div class="d-flex  justify-content-center">
+          <h2>Notes</h2>
+        </div>
 
-        
-        {
-          notes.map(detail =>
-    
-            <Card key={detail._id} style={{ width: '18rem' }}>
-          <Card.Body>
-            <Card.Title>{detail.title}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">{dateConvert(detail.date)}</Card.Subtitle>
-            <Card.Text>
-            {detail.description}
-            </Card.Text>
-            <UpdateNoteModel 
-            noteid={detail._id} 
-            title={detail.title}
-            description={detail.description}
-            updatePage={updatePage}
-            />
-            <DeleteNoteModel 
-            noteid={detail._id} 
-            title={detail.title}
-            updatePage={updatePage}
-            />
-          </Card.Body>
-        </Card>
-          )
-        }
+        <div class="d-flex flex-wrap justify-content-center">
+          {
+            notes.map(detail =>
+              <div class="m-2">
+                <Card key={detail._id} style={{ width: '18rem' }}>
+                  <Card.Body>
+                    <Card.Title>{detail.title}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">{dateConvert(detail.date)}</Card.Subtitle>
+                    <Card.Text>
+                      {detail.description}
+                    </Card.Text>
+                    
+                    <UpdateNoteModel
+                      noteid={detail._id}
+                      title={detail.title}
+                      description={detail.description}
+                      updatePage={updatePage}
+                    />
+                    <DeleteNoteModel
+                      noteid={detail._id}
+                      title={detail.title}
+                      updatePage={updatePage}
+                    />
+                  </Card.Body>
+                </Card>
+              </div>
+            )
+          }
 
-<Button onClick={previousPage} variant="secondary">Previous page</Button>{' '}
-            <Button onClick={nextPage} variant="primary">Next page</Button>{' '}
-            &nbsp;
-            &nbsp;
-            Page {pages.currentPage} of {pages.totalPages}
-
+        </div>
+        <div class="m-2 d-flex justify-content-center">
+        <ButtonGroup className="mb-2">
+        <Button onClick={previousPage}>&lt;Prev</Button>
+        <Button> {pages.currentPage} of {pages.totalPages} </Button>
+        <Button onClick={nextPage}>Next&gt;</Button>
+      </ButtonGroup>
+      
+   
+        </div>
 
       </div>
     </>
