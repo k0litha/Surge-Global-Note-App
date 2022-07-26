@@ -1,6 +1,6 @@
 const mongoose =require("mongoose");
-const bcrypt = require("bcrypt");
-const validator = require('validator');
+
+
 const noteSchema =new mongoose.Schema({
     title: {
         type: String,

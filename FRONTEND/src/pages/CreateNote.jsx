@@ -1,34 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 import jwt_decode from 'jwt-decode';
 import { Navbar, Button, Container, Nav, Form } from 'react-bootstrap';
 
 export default function CreateNote() {
-  const navigate = useNavigate();
 
-
+//cookie decode
   const [cookie] = useCookies([]);
   const token = cookie.jwt;
   const decoded = jwt_decode(token)
-
-
 
   const [values, setValues] = useState({
     userid: decoded.id
   });
 
+//logout
   const logOut = () => {
-    window.location.replace = 'http://localhost:4000/logout';
-    return null;
+    window.location.replace('http://localhost:4000/logout');
+    return false;
   };
 
-
-
+//generate toast per error
   const generateError = (err) => toast.error(err);
 
+
+//handle note creation 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -83,20 +81,18 @@ export default function CreateNote() {
 
               <Form.Label>Description</Form.Label>
               <Form.Control onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
-                name="Description" type="text" placeholder="Description " />
+                name="description" type="text" placeholder="Description " />
               <Form.Text className="text-muted"> </Form.Text>
             </Form.Group>
 
             <Button variant="primary" type="submit">
               Create
             </Button>
+
           </Form>
 
         </div>
-
-
       </div>
-
     </>
   )
 }

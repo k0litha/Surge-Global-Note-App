@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from 'axios';
-import { Navbar, Table, Button, Container, Nav, Form } from 'react-bootstrap';
-import { Toaster, toast } from "react-hot-toast"
+import { Navbar, Button, Container, Nav, Form } from 'react-bootstrap';
+import { Toaster } from "react-hot-toast"
 import jwt_decode from 'jwt-decode';
 
 
 export default function UserReg() {
-  const navigate = useNavigate();
 
-  const [values, setValues] = useState({ status: 1});
-  const [cookie, removeCookie] = useCookies([]);
+  const [values, setValues] = useState({ status: 1 });
+  const [cookie] = useCookies([]);
   const token = cookie.jwt;
   const decoded = jwt_decode(token)
 
@@ -24,7 +22,8 @@ export default function UserReg() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(`http://localhost:4000/userReg/${decoded.id}`, { ...values },
+      const { data } = await axios.post(`http://localhost:4000/userReg/${decoded.id}`,
+        { ...values },
         { withCredentials: true, });
       console.log(data);
       window.location.replace('http://localhost:4000/logout');
@@ -36,7 +35,6 @@ export default function UserReg() {
       }
     }
   };
-
 
 
   return (
@@ -51,9 +49,9 @@ export default function UserReg() {
       </Navbar>
       <div class="p-5 d-flex justify-content-center">
         <Form onSubmit={(e) => handleSubmit(e)}>
-        <h2 class="m-1">User Registration</h2>
+          <h2 class="m-1">User Registration</h2>
           <Form.Group className="mb-3" controlId="formBasicEmail">
-          <br></br>
+            <br></br>
             <Form.Label>First Name</Form.Label>
             <Form.Control onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
               name="firstname" type="text" placeholder="firstname" />
@@ -61,32 +59,32 @@ export default function UserReg() {
             <br></br>
             <Form.Label>Last Name</Form.Label>
             <Form.Control onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
-              name="lastname" type="text" placeholder="lastname"/>
+              name="lastname" type="text" placeholder="lastname" />
             <Form.Text className="text-muted"> </Form.Text>
             <br></br>
             <Form.Label>New Password</Form.Label>
             <Form.Control onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
-              name="password" type="password" placeholder="password"/>
+              name="password" type="password" placeholder="password" />
             <Form.Text className="text-muted"> </Form.Text>
             <br></br>
             <Form.Label>Phone Number</Form.Label>
             <Form.Control onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
-              name="phone" type="phone" placeholder="phone"/>
+              name="phone" type="phone" placeholder="phone" />
             <Form.Text className="text-muted"> </Form.Text>
             <br></br>
             <Form.Label>Birth Date</Form.Label>
             <Form.Control onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
-              name="dateOfBirth" type="date" placeholder="dateOfBirth"/>
+              name="dateOfBirth" type="date" placeholder="dateOfBirth" />
             <Form.Text className="text-muted"> </Form.Text>
             <br></br>
-          
+
           </Form.Group>
           <Button variant="primary" type="submit">
             Submit
           </Button>
         </Form>
 
-        
+
       </div>
 
     </>

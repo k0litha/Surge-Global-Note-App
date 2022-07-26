@@ -1,21 +1,22 @@
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import React, { useState, useEffect } from 'react';
-import { Navbar, Modal, Table, Button, Container, Nav, Card, Form } from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
 import axios from "axios";
-function DeleteNoteModel({ noteid, title, description, updatePage }) {
+function DeleteNoteModel({ noteid, title, updatePage }) {
+
+
 
     const [show, setShow] = useState(false);
-
-
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
 
-
     useEffect(() => {
         updatePage(show)
     }, [show])
+
+
 
 
     const handleSubmit = async (e) => {
@@ -25,7 +26,6 @@ function DeleteNoteModel({ noteid, title, description, updatePage }) {
             console.log(data);
             toast.success("Note Deleted successfully")
             handleClose()
-
         } catch (err) {
             if (err.message.includes("401") || err.message.includes("403")) {
                 window.location.replace('http://localhost:4000/logout');
@@ -54,8 +54,6 @@ function DeleteNoteModel({ noteid, title, description, updatePage }) {
                             Delete
                         </Button>
                     </Form>
-
-
 
                 </Modal.Body>
                 <Modal.Footer>

@@ -1,15 +1,16 @@
 const UserModel = require("../Models/UserModel");
 const jwt = require("jsonwebtoken");
-
 const maxAge = process.env.JWT_AGE;
 
-const createToken = (id, accountType,email, stat) => {
-    return jwt.sign({ id, accountType,email, stat }, process.env.JWT_KEY, {
+// JWT token creation function
+const createToken = (id, accountType, email, stat) => {
+    return jwt.sign({ id, accountType, email, stat }, process.env.JWT_KEY, {
         expiresIn: maxAge,
     });
 };
 
 
+//handling returned errors from db
 const handleErrors = (err) => {
     let errors = { email: "", password: "" };
 
@@ -30,7 +31,7 @@ const handleErrors = (err) => {
 };
 
 
-
+//generate random password for newly created user
 function passwordGen() {
     const generator = require('generate-password');
     const password = generator.generate({
@@ -39,10 +40,11 @@ function passwordGen() {
         lowercase: true
     });;
     return password;
-}
+};
 
 
 
+//mail sender
 function sendmail(email, password) {
     const nodemailer = require("nodemailer");
     var transport = nodemailer.createTransport({
@@ -59,7 +61,6 @@ function sendmail(email, password) {
         subject: 'Note Service Login',
         text: `Email: ${email} | password: ${password} | Login Link: http://localhost:3000/`,
     };
-
     transport.sendMail(mailOptions, function (err, info) {
         if (err) {
             console.log(err)
@@ -70,9 +71,8 @@ function sendmail(email, password) {
 }
 
 
-
+//user creation handling
 module.exports.createUser = async (req, res) => {
-
     try {
         const password = passwordGen();
         const { email } = req.body;
@@ -83,22 +83,23 @@ module.exports.createUser = async (req, res) => {
         console.log(error);
         const errors = handleErrors(error);
         res.json({ errors, created: false });
-
     }
 };
 
 
+
+
+//user login handling
 module.exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await UserModel.login(email, password);
-        const token = createToken(user._id, user.accountType,user.email, user.status);
+        const token = createToken(user._id, user.accountType, user.email, user.status);
         res.cookie("jwt", token, {
             withCredentials: true,
             httpOnly: false,
             maxAge: maxAge * 1000,
         });
-        
         res.status(200).json({ user: user._id, login: true });
     } catch (error) {
         console.log(error);
@@ -109,7 +110,7 @@ module.exports.login = async (req, res) => {
 
 
 
-
+//user fetching handling
 module.exports.getAllUser = async (req, res) => {
     try {
         const { page } = req.params;
@@ -124,19 +125,14 @@ module.exports.getAllUser = async (req, res) => {
         if (page < 1) {
             newpage = 1;
         }
-
         const skip = (newpage - 1) * size;
-
-
 
         const users = await UserModel
             .find({ accountType: 'student' })
             .select('-password')
             .skip(skip)
             .limit(size);
-
         res.status(200).json({ pages: { totalPages: totalPages, currentPage: newpage }, users: users });
-
     } catch (error) {
         console.log(error);
         const errors = handleErrors(error);
@@ -145,15 +141,15 @@ module.exports.getAllUser = async (req, res) => {
 };
 
 
+
+//user search handling
 module.exports.userSearch = async (req, res) => {
     try {
         const { item } = req.params;
         const users = await UserModel
-            .find({email: new RegExp(item, 'i')})
+            .find({ email: new RegExp(item, 'i') })
             .select('-password')
-           
         res.status(200).json({ users: users });
-
     } catch (error) {
         console.log(error);
         const errors = handleErrors(error);
@@ -164,21 +160,21 @@ module.exports.userSearch = async (req, res) => {
 
 
 
-
+//user registration   handling
 exports.userUpdate = async (req, res) => {
     try {
-    const { id } = req.params;
-
-
-    const userUpdated = await UserModel.findOneAndUpdate({ _id: id }, req.body, {
-        upsert: true,
-    });
-    res.status(200).json({ success: true, userUpdated });
-    }catch{
+        const { id } = req.params;
+        const userUpdated = await UserModel.findOneAndUpdate({ _id: id }, req.body, {
+            upsert: true,
+        });
+        res.status(200).json({ success: true, userUpdated });
+    } catch {
         console.log(error);
     }
-
 };
+
+
+//user logout handling
 exports.logout = async (req, res) => {
     res.clearCookie("jwt");
     res.redirect('http://localhost:3000/');

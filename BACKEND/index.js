@@ -12,12 +12,11 @@ dotenv.config();
 
 
 
-
-app.listen(4000,()=>{
+app.listen(process.env.SERVER_PORT,()=>{
     console.log("port 4000 server started")
 });
 
-mongoose.connect("mongodb://localhost:27017/noteDB",{
+mongoose.connect(process.env.MONGO_URI,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
@@ -29,7 +28,7 @@ mongoose.connect("mongodb://localhost:27017/noteDB",{
 });
 
 app.use(cors({
-    origin:["http://localhost:3000"],
+    origin:[process.env.FRONTEND_URL],
     methods: ["GET","POST"],
     credentials: true,
 }));

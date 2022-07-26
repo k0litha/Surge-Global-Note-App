@@ -1,6 +1,8 @@
-const User = require("../Models/UserModel");
 const jwt = require("jsonwebtoken");
 
+
+
+//any user authentication 
 module.exports.checkUser = (req,res,next) =>{
     const token =req.cookies.jwt;
     if(token){
@@ -16,7 +18,7 @@ module.exports.checkUser = (req,res,next) =>{
 
 
 
-
+//admin only user authentication 
 module.exports.checkAdmin = (req,res,next) =>{
     const token =req.cookies.jwt;
     if(token){
@@ -32,6 +34,9 @@ module.exports.checkAdmin = (req,res,next) =>{
     }
 }
 
+
+
+//student only user authentication 
 module.exports.checkStudent = (req,res,next) =>{
     const token =req.cookies.jwt;
     if(token){

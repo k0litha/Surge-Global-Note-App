@@ -4,6 +4,9 @@ import { useCookies } from "react-cookie";
 import jwt_decode from 'jwt-decode';
 
 const AdminRoute = () => {
+
+
+  //check whether the user is an admin and has an activated account
   var access = false;
   const [cookie] = useCookies([]);
   const token = cookie.jwt;
@@ -20,6 +23,10 @@ const AdminRoute = () => {
     console.log(err);
     access = false;
   }
+
+
+
+
 
   return (
     access ? <Outlet /> : <Navigate to={"/notes"} />

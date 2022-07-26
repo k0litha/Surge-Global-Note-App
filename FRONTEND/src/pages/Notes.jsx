@@ -2,18 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from 'axios';
-import { Toaster, toast } from "react-hot-toast"
-import { Navbar, Table, Button, Container, Nav, Card,ButtonGroup } from 'react-bootstrap';
+import { Toaster } from "react-hot-toast"
+import { Navbar, Button, Container, Nav, Card, ButtonGroup } from 'react-bootstrap';
 import UpdateNoteModel from './UpdateNoteModel'
 import DeleteNoteModel from './DeleteNoteModel'
 import jwt_decode from 'jwt-decode';
 
 
 export default function Notes() {
-  const navigate = useNavigate();
+
 
   const [cookie] = useCookies([]);
-
   const token = cookie.jwt;
   const decoded = jwt_decode(token)
 
@@ -25,8 +24,6 @@ export default function Notes() {
 
 
 
-
-
   const logOut = () => {
     window.location.replace('http://localhost:4000/logout');
     return null;
@@ -34,40 +31,41 @@ export default function Notes() {
 
 
 
-
   const fetchNotes = async () => {
     try {
-      const result = await axios.get(`http://localhost:4000/allnotes/${decoded.id}/${page}`, { withCredentials: true, })
+      const result = await axios.get(`http://localhost:4000/allnotes/${decoded.id}/${page}`,
+        { withCredentials: true, })
       setUsers(result.data.notes)
       setPages(result.data.pages)
-
-
     } catch (error) {
       if (error.message.includes("401") || error.message.includes("403")) {
         window.location.replace = 'http://localhost:4000/logout';
         return false;
       }
     }
-  }
+  };
+
+
 
   const nextPage = () => {
     if (pages.totalPages > page)
       setPage(++page)
   }
-
   const previousPage = () => {
     if (1 < page)
       setPage(--page)
-
   }
   const updatePage = (show) => {
     setShow(show)
   }
 
 
+
   useEffect(() => {
     fetchNotes(page)
   }, [page, show])
+
+
 
   function dateConvert(date) {
     return new Date(date).toLocaleDateString();
@@ -75,8 +73,8 @@ export default function Notes() {
 
 
 
-
   return (
+    
     <><div><Toaster position="top-center" reverseOrder={false} /></div>
       <div>
         <Navbar bg="dark" variant="dark">
@@ -104,7 +102,7 @@ export default function Notes() {
                     <Card.Text>
                       {detail.description}
                     </Card.Text>
-                    
+
                     <UpdateNoteModel
                       noteid={detail._id}
                       title={detail.title}
@@ -124,13 +122,11 @@ export default function Notes() {
 
         </div>
         <div class="m-2 d-flex justify-content-center">
-        <ButtonGroup className="mb-2">
-        <Button onClick={previousPage}>&lt;Prev</Button>
-        <Button> {pages.currentPage} of {pages.totalPages} </Button>
-        <Button onClick={nextPage}>Next&gt;</Button>
-      </ButtonGroup>
-      
-   
+          <ButtonGroup className="mb-2">
+            <Button onClick={previousPage}>&lt;Prev</Button>
+            <Button> {pages.currentPage} of {pages.totalPages} </Button>
+            <Button onClick={nextPage}>Next&gt;</Button>
+          </ButtonGroup>
         </div>
 
       </div>

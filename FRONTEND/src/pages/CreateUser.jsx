@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 import { Navbar, Button,Container,Nav,Form} from 'react-bootstrap';
 import jwt_decode from 'jwt-decode';
 
@@ -23,6 +22,7 @@ export default function CreateUser() {
 
   const generateError = (err) => toast.error(err);
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -34,10 +34,8 @@ export default function CreateUser() {
           const { email } = data.errors;
           if (email) generateError(email);
         } else {
-          toast.success("User created successfully")
-        }
+          toast.success("User created successfully")}
       }
-
     } catch (err) {
       if (err.message.includes("401") || err.message.includes("403")) {
         window.location.replace('http://localhost:4000/logout');
@@ -62,7 +60,6 @@ export default function CreateUser() {
 
 
       <div class="p-5 d-flex justify-content-center">
-       
         <Form  onSubmit={(e) => handleSubmit(e)}>
         <h2 class="m-1">Create User</h2>
           <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -78,7 +75,6 @@ export default function CreateUser() {
         </Form>
 
       </div>
-
     </>
   )
 }

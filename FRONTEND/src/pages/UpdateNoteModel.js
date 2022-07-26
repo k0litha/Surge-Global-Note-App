@@ -1,19 +1,22 @@
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import React, { useState, useEffect } from 'react';
-import { Navbar, Modal, Table, Button, Container, Nav, Card, Form } from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
 import axios from "axios";
-function UpdateNoteModel({ noteid, title, description,updatePage }) {
+
+function UpdateNoteModel({ noteid, title, description, updatePage }) {
 
     const [show, setShow] = useState(false);
-
-
     const [values, setValues] = useState({
         title: title,
         description: description,
-        date:new Date()
+        date: new Date()
     });
 
+
+
     const generateError = (err) => toast.error(err);
+
+
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -39,7 +42,6 @@ function UpdateNoteModel({ noteid, title, description,updatePage }) {
                 } else {
                     toast.success("Note updated successfully")
                     handleClose()
-                 
                 }
             }
         } catch (err) {
@@ -49,7 +51,6 @@ function UpdateNoteModel({ noteid, title, description,updatePage }) {
             }
         }
     };
-
 
 
     return (
@@ -76,11 +77,9 @@ function UpdateNoteModel({ noteid, title, description,updatePage }) {
                         </Form.Group>
 
                         <Button variant="primary" type="submit">
-                            Submit
+                            Update
                         </Button>
                     </Form>
-
-
 
                 </Modal.Body>
                 <Modal.Footer>

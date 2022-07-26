@@ -5,6 +5,7 @@ import jwt_decode from 'jwt-decode';
 
 const StudentRoute = () => {
 
+  //check whether the user is an student and has an activated account
   var access = false;
   const [cookie] = useCookies([]);
   const token = cookie.jwt;
@@ -21,9 +22,11 @@ const StudentRoute = () => {
     console.log(err);
     access = false;
   }
+
+
+
   return (
     access ? <Outlet /> : <Navigate to={"/"} />
-
   )
 }
 

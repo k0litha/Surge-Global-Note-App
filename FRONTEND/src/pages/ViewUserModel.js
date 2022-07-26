@@ -1,18 +1,29 @@
 import { Modal, Button } from 'react-bootstrap';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import axios from "axios";
-function ViewUserModel({ uid, firstName, lastName, email, phone, dob, status, accountType }) {
+function ViewUserModel({
+    uid,
+    firstName,
+    lastName,
+    email,
+    phone,
+    dob,
+    status,
+    accountType }) {
 
     const [show, setShow] = useState(false);
+
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    function  dateConvert(date){
-        return  new Date(date).toLocaleDateString();
-       }
-     
+
+    function dateConvert(date) {
+        return new Date(date).toLocaleDateString();
+    }
+
+
+
     return (
         <>
             <Button variant="primary" onClick={handleShow}>
@@ -43,4 +54,5 @@ function ViewUserModel({ uid, firstName, lastName, email, phone, dob, status, ac
         </>
     )
 }
+
 export default ViewUserModel

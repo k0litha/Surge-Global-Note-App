@@ -1,55 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Navbar, Table, Button, ButtonGroup, Container, Nav, Form, Row, Col } from 'react-bootstrap';
 import ViewUserModel from './ViewUserModel'
 import jwt_decode from 'jwt-decode';
 
 export default function AdminHome() {
-  const navigate = useNavigate();
 
+//cookie decode
   const [cookie] = useCookies([]);
-
   const token = cookie.jwt;
   const decoded = jwt_decode(token)
 
+//logout
   const logOut = () => {
     window.location.replace('http://localhost:4000/logout');
     return false;
   }
+
+
   const [users, setUsers] = useState([]);
   const [pages, setPages] = useState({});
   var [page, setPage] = useState(1);
 
 
 
-
+//fetch all users(students)
   const fetchUsers = async () => {
     try {
       const result = await axios.get(`http://localhost:4000/allusers/${page}`, { withCredentials: true, })
       setUsers(result.data.users)
       setPages(result.data.pages)
-
-
-    } catch (error) {
-      if (error.message.includes("401") || error.message.includes("403")) {
-        window.location.replace = 'http://localhost:4000/logout';
-        return false;
-      }
-    }
-  }
-
-  const handleSearch = async (e) => {
-    try {
-      if (e.target.value == "") { fetchUsers(page) }
-
-
-      const result = await axios.get(`http://localhost:4000/usersearch/${e.target.value}`, { withCredentials: true, })
-      setUsers(result.data.users)
-
-
     } catch (error) {
       if (error.message.includes("401") || error.message.includes("403")) {
         window.location.replace = 'http://localhost:4000/logout';
@@ -59,28 +41,42 @@ export default function AdminHome() {
   };
 
 
+//handling search 
+  const handleSearch = async (e) => {
+    try {
+      if (e.target.value == "") { fetchUsers(page) }
+      const result = await axios.get(`http://localhost:4000/usersearch/${e.target.value}`, { withCredentials: true, })
+      setUsers(result.data.users)
+    } catch (error) {
+      if (error.message.includes("401") || error.message.includes("403")) {
+        window.location.replace = 'http://localhost:4000/logout';
+        return false;
+      }
+    }
+  };
 
 
-
+// page handling
   const nextPage = () => {
     if (pages.totalPages > page)
       setPage(++page)
   }
-
   const previousPage = () => {
     if (1 < page)
       setPage(--page)
-
   }
+
+
 
   useEffect(() => {
     fetchUsers(page)
   }, [page])
 
-
+//ISO to dd/mm/yyyy
   function dateConvert(date) {
     return new Date(date).toLocaleDateString();
   }
+
 
   return (<div>
 
@@ -94,15 +90,15 @@ export default function AdminHome() {
         </Nav>
       </Container>
     </Navbar>
+
     <div class="d-flex  justify-content-center">
       <h2 class="m-3">All Users</h2>
     </div>
+
     <div class="d-flex flex-wrap justify-content-center">
 
-
       <Table striped bordered hover style={{ width: '75vw' }}>
-        <thead >
-
+        <thead>
           <tr>
             <th class="text-center">First Name</th>
             <th class="text-center">Last Name</th>
@@ -110,7 +106,6 @@ export default function AdminHome() {
             <th class="text-center">Phone Number</th>
             <th class="text-center">Birth Day</th>
             <th class="text-center">
-
               <Form>
                 <Row>
                   <Col xs={10}>
@@ -118,8 +113,6 @@ export default function AdminHome() {
                   </Col>
                 </Row>
               </Form>
-
-
             </th>
           </tr>
         </thead>
@@ -143,8 +136,8 @@ export default function AdminHome() {
                     status={user.status}
                     accountType={user.accountType}
                   />
-                </div></td>
-
+                </div>
+                </td>
               </tr>
             )
           }
@@ -153,6 +146,7 @@ export default function AdminHome() {
           <tr>
             <td colSpan={6} >
               <div class="m-2 d-flex justify-content-center">
+
                 <ButtonGroup className="mb-2">
                   <Button onClick={previousPage}>&lt;Prev</Button>
                   <Button> {pages.currentPage} of {pages.totalPages} </Button>
@@ -160,15 +154,12 @@ export default function AdminHome() {
                 </ButtonGroup>
 
               </div>
-
-
-
             </td>
-
           </tr>
         </tfoot>
       </Table>
 
     </div>
-  </div >)
+  </div >
+  )
 }

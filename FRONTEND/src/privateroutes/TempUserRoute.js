@@ -4,6 +4,8 @@ import { useCookies } from "react-cookie";
 import jwt_decode from 'jwt-decode';
 
 const TempUserRoute = () => {
+
+  //check the user has an temporary account
   var access = false;
   const [cookie] = useCookies([]);
   const token = cookie.jwt;
