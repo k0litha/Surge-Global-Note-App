@@ -145,6 +145,31 @@ module.exports.getAllUser = async (req, res) => {
 };
 
 
+
+
+module.exports.getUser = async (req, res) => {
+    try {
+        const { uid } = req.params;
+        const user = await UserModel
+            .find({ _id: uid })
+            .select('-password')
+           
+        res.status(200).json({ user: user });
+
+    } catch (error) {
+        console.log(error);
+        const errors = handleErrors(error);
+        res.json({ errors, created: false });
+    }
+};
+
+
+
+
+
+
+
+
 exports.userUpdate = async (req, res) => {
     const { id } = req.params;
     //const user = await UserModel.findOne({ _id: id });

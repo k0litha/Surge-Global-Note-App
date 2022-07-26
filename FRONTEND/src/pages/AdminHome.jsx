@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
+
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-
+import { Navbar, Table, Button, Container, Nav, Form } from 'react-bootstrap';
+import ViewUserModel from './ViewUserModel'
 export default function AdminHome() {
   const navigate = useNavigate();
 
@@ -20,7 +17,7 @@ export default function AdminHome() {
     return false;
   }
   const [users, setUsers] = useState([]);
-  const [pages, setP] = useState({});
+  const [pages, setPages] = useState({});
   var [page, setPage] = useState(1);
 
 
@@ -30,16 +27,16 @@ export default function AdminHome() {
     try {
       const result = await axios.get(`http://localhost:4000/allusers/${page}`, { withCredentials: true, })
       setUsers(result.data.users)
-      setP(result.data.pages)
+      setPages(result.data.pages)
 
 
     } catch (error) {
       if (error.message.includes("401") || error.message.includes("403")) {
         window.location.replace = 'http://localhost:4000/logout';
         return false;
+      }
     }
   }
-}
 
   const nextPage = () => {
 
@@ -53,6 +50,8 @@ export default function AdminHome() {
   useEffect(() => {
     fetchUsers(page)
   }, [page])
+
+
 
 
   return (<div>
@@ -88,6 +87,9 @@ export default function AdminHome() {
               <td>{user.email}</td>
               <td>{user.phone}</td>
               <td>{user.dateOfBirth}</td>
+              <td><div   className="container mt-3">
+                <ViewUserModel uid={user._id} />
+              </div></td>
 
             </tr>
           )

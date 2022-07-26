@@ -4,9 +4,7 @@ import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from 'jwt-decode';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import { Navbar, Button,Container,Nav,Form} from 'react-bootstrap';
 export default function CreateNote() {
   const navigate = useNavigate();
 
