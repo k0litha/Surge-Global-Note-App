@@ -1,5 +1,6 @@
 import { Modal, Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
+
 import axios from "axios";
 function ViewUserModel({ uid }) {
 
@@ -47,7 +48,7 @@ function ViewUserModel({ uid }) {
 
                     {
                         user.map(detail =>
-                            <div>
+                            <div key={detail._id}>
                                 <h2>{detail._id}</h2>
                                 <h2>{detail.firstName}</h2>
                                 <h2>{detail.lastName}</h2>

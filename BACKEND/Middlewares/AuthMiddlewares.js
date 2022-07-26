@@ -14,6 +14,9 @@ module.exports.checkUser = (req,res,next) =>{
     }
 }
 
+
+
+
 module.exports.checkAdmin = (req,res,next) =>{
     const token =req.cookies.jwt;
     if(token){

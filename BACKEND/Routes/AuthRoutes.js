@@ -8,7 +8,7 @@ const router = require("express").Router();
 router.get("/allusers/:page",checkAdmin,getAllUser);
 router.get("/getuser/:uid",checkAdmin,getUser);
 router.post("/userReg/:id",checkUser,userUpdate);
-router.get("/logout",logout);
+router.get("/logout",checkUser,logout);
 router.post("/login",login);
 router.post("/createuser",checkUser,createUser );
 

@@ -3,8 +3,8 @@ const jwt = require("jsonwebtoken");
 
 const maxAge = process.env.JWT_AGE;
 
-const createToken = (id, accountType, stat) => {
-    return jwt.sign({ id, accountType, stat }, process.env.JWT_KEY, {
+const createToken = (id, accountType,email, stat) => {
+    return jwt.sign({ id, accountType,email, stat }, process.env.JWT_KEY, {
         expiresIn: maxAge,
     });
 };
@@ -92,18 +92,18 @@ module.exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await UserModel.login(email, password);
-        const token = createToken(user._id, user.accountType, user.status);
+        const token = createToken(user._id, user.accountType,user.email, user.status);
         res.cookie("jwt", token, {
             withCredentials: true,
             httpOnly: false,
             maxAge: maxAge * 1000,
         });
         
-        res.status(200).json({ user: user._id, created: true });
+        res.status(200).json({ user: user._id, login: true });
     } catch (error) {
         console.log(error);
         const errors = handleErrors(error);
-        res.json({ errors, created: false });
+        res.json({ errors, login: false });
     }
 };
 
@@ -171,15 +171,17 @@ module.exports.getUser = async (req, res) => {
 
 
 exports.userUpdate = async (req, res) => {
+    try {
     const { id } = req.params;
-    //const user = await UserModel.findOne({ _id: id });
-    //  if (!user)
-    //  console.log("no user")
+
 
     const userUpdated = await UserModel.findOneAndUpdate({ _id: id }, req.body, {
         upsert: true,
     });
     res.status(200).json({ success: true, userUpdated });
+    }catch{
+        console.log(error);
+    }
 
 };
 exports.logout = async (req, res) => {

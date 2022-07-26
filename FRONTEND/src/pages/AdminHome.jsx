@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
-
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Navbar, Table, Button, Container, Nav, Form } from 'react-bootstrap';
 import ViewUserModel from './ViewUserModel'
+import jwt_decode from 'jwt-decode';
+
 export default function AdminHome() {
   const navigate = useNavigate();
 
-  const [cookie, removeCookie] = useCookies([]);
+  const [cookie] = useCookies([]);
 
+  const token = cookie.jwt;
+  const decoded = jwt_decode(token)
 
   const logOut = () => {
     window.location.replace('http://localhost:4000/logout');
@@ -39,12 +42,14 @@ export default function AdminHome() {
   }
 
   const nextPage = () => {
-
-    setPage(++page)
+    if (pages.totalPages > page)
+      setPage(++page)
   }
 
   const previousPage = () => {
-    setPage(--page)
+    if (1 < page)
+      setPage(--page)
+
   }
 
   useEffect(() => {
@@ -62,7 +67,7 @@ export default function AdminHome() {
         <Nav defaultActiveKey="/admin" className="me-auto">
           <Nav.Link href="/admin">Home</Nav.Link>
           <Nav.Link href="/admin/create">Create User</Nav.Link>
-          <Nav.Link onClick={logOut}>Log Out</Nav.Link>
+          <Nav.Link onClick={logOut}>Log Out ({decoded.email})</Nav.Link>
         </Nav>
       </Container>
     </Navbar>
@@ -87,7 +92,7 @@ export default function AdminHome() {
               <td>{user.email}</td>
               <td>{user.phone}</td>
               <td>{user.dateOfBirth}</td>
-              <td><div   className="container mt-3">
+              <td><div className="container mt-3">
                 <ViewUserModel uid={user._id} />
               </div></td>
 
