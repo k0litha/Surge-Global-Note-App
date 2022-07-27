@@ -1,6 +1,9 @@
 # Surge Global Internship Assignment 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple note taking web application built using React.Js, Node.Js, Express.Js and MongoDB. This application satisfies almost all the requirements such as proper error handling, role-based authentication with JWT, private user routes, backend pagination with frontend page numbering and many others. 
+
+Notes are displayed as cards with cleaner and simple looking user interface. A student user can create, update or delete notes as they wish. An admin user can view the list of users in the database with their full details. An admin user also can create a student user and the server will automatically send the credentials to the corresponding email address.
+
 
 ## Installation 
 
@@ -16,7 +19,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 #### Server installation
 * Now move into the BACKEND directory.<br>`cd BACKEND`</br>
 * Then install all the dependencies for the server.<br>`npm install`</br>
-* Configure the .env variables as needed.
+* Configure the .env variables as needed (Configure Nodemailer, page sizes, JWT key and etc...).
 * In the same directory run the following command to start the server.<br>`npm start`</br>
 
 #### Seed database
