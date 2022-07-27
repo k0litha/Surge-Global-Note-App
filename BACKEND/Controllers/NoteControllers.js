@@ -34,11 +34,14 @@ module.exports.getAllNote = async (req, res) => {
     try {
         const { uid, page } = req.params;
         var newpage = page;
-        const size = 8;
-        const totalRows = await NoteModel.countDocuments();
+        const size = process.env.NOTES_PER_PAGE;
+        const totalRows = await NoteModel.countDocuments({ userid: uid });
         const totalPages = Math.ceil(totalRows / size)
 
-        if (page > totalPages) {
+        if (!totalPages) {
+            newpage = 1;
+        }
+        else if (page > totalPages) {
             newpage = totalPages;
         }
         if (page < 1) {
@@ -49,6 +52,7 @@ module.exports.getAllNote = async (req, res) => {
         const notes = await NoteModel
             .find({ userid: uid })
             .select('-password')
+            .sort({"_id":-1})
             .skip(skip)
             .limit(size);
         res.status(200).json({ pages: { totalPages: totalPages, currentPage: newpage }, notes: notes });

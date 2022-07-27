@@ -59,9 +59,9 @@ export default function CreateUser() {
       </Navbar>
 
 
-      <div class="p-5 d-flex justify-content-center">
+      <div className="p-5 d-flex justify-content-center">
         <Form  onSubmit={(e) => handleSubmit(e)}>
-        <h2 class="m-1">Create User</h2>
+        <h2 className="m-1">Create User</h2>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}

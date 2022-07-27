@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from 'axios';
 import { Toaster } from "react-hot-toast"
@@ -74,7 +73,6 @@ export default function Notes() {
 
 
   return (
-    
     <><div><Toaster position="top-center" reverseOrder={false} /></div>
       <div>
         <Navbar bg="dark" variant="dark">
@@ -87,14 +85,14 @@ export default function Notes() {
             </Nav>
           </Container>
         </Navbar>
-        <div class="d-flex  justify-content-center">
+        <div className="d-flex  justify-content-center">
           <h2>Notes</h2>
         </div>
 
-        <div class="d-flex flex-wrap justify-content-center">
+        <div className="d-flex flex-wrap justify-content-center">
           {
             notes.map(detail =>
-              <div class="m-2">
+              <div className="m-2">
                 <Card key={detail._id} style={{ width: '18rem' }}>
                   <Card.Body>
                     <Card.Title>{detail.title}</Card.Title>
@@ -121,7 +119,7 @@ export default function Notes() {
           }
 
         </div>
-        <div class="m-2 d-flex justify-content-center">
+        <div className="m-2 d-flex justify-content-center">
           <ButtonGroup className="mb-2">
             <Button onClick={previousPage}>&lt;Prev</Button>
             <Button> {pages.currentPage} of {pages.totalPages} </Button>

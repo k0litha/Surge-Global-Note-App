@@ -47,9 +47,9 @@ export default function UserReg() {
           </Nav>
         </Container>
       </Navbar>
-      <div class="p-5 d-flex justify-content-center">
+      <div className="p-5 d-flex justify-content-center">
         <Form onSubmit={(e) => handleSubmit(e)}>
-          <h2 class="m-1">User Registration</h2>
+          <h2 className="m-1">User Registration</h2>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <br></br>
             <Form.Label>First Name</Form.Label>

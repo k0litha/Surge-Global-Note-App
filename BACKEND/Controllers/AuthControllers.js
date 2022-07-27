@@ -115,11 +115,14 @@ module.exports.getAllUser = async (req, res) => {
     try {
         const { page } = req.params;
         var newpage = page;
-        const size = 8;
+        const size = process.env.USERS_PER_PAGE;
         const totalRows = await UserModel.countDocuments();
         const totalPages = Math.ceil(totalRows / size)
 
-        if (page > totalPages) {
+        if (!totalPages) {
+            newpage = 1;
+        }
+        else if (page > totalPages) {
             newpage = totalPages;
         }
         if (page < 1) {
@@ -130,6 +133,7 @@ module.exports.getAllUser = async (req, res) => {
         const users = await UserModel
             .find({ accountType: 'student' })
             .select('-password')
+            .sort({"_id":-1})
             .skip(skip)
             .limit(size);
         res.status(200).json({ pages: { totalPages: totalPages, currentPage: newpage }, users: users });
@@ -147,7 +151,10 @@ module.exports.userSearch = async (req, res) => {
     try {
         const { item } = req.params;
         const users = await UserModel
-            .find({ email: new RegExp(item, 'i') })
+            .find({
+                accountType: 'student',
+                email: new RegExp(item, 'i')
+            })
             .select('-password')
         res.status(200).json({ users: users });
     } catch (error) {

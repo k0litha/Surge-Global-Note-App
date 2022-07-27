@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState} from 'react'
 import axios from "axios"
 import { Toaster, toast } from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
-import { Navbar, Table, Button, Container, Nav, Form } from 'react-bootstrap';
+import { Navbar,  Button, Container, Nav, Form } from 'react-bootstrap';
 export default function Login() {
   const navigate = useNavigate();
 
@@ -51,7 +51,7 @@ export default function Login() {
       </Navbar>
       <div>
       
-        <div class="p-5 d-flex justify-content-center">
+        <div className="p-5 d-flex justify-content-center">
        
         <Form onSubmit={(e) => handleSubmit(e)} style={{ width: '18rem'}}>
         <h2>Login</h2>

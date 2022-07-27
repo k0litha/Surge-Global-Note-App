@@ -1,22 +1,23 @@
-const mongoose =require("mongoose");
+const mongoose = require("mongoose");
 const User = require("./Models/UserModel");
-const bcrypt = require("bcrypt");
+const Note = require("./Models/NoteModel");
 
-mongoose.connect("mongodb://localhost:27017/noteDB",{
+
+mongoose.connect("mongodb://localhost:27017/noteDB", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
-.then (()=>{
-    console.log("Connection Success")
-})
-.catch (()=>{
-    console.log(err.message);
-});
+    .then(() => {
+        console.log("Connection Success")
+    })
+    .catch(() => {
+        console.log(err.message);
+    });
 
-const seedUsers=[
+const seedUsers = [
     {
         email: "admin@gmail.com",
-        password: "$2b$10$C64d4.mXuqJaESpkliJ2n.WYKro6amJplEoCdisevJSC2OIiDFlPS", // password= admin
+        password: "$2b$10$C64d4.mXuqJaESpkliJ2n.WYKro6amJplEoCdisevJSC2OIiDFlPS", // Email='admin@gmail.com' Password='admin'
         accountType: "admin",
         status: true,
         phone: "0771234567",
@@ -27,7 +28,7 @@ const seedUsers=[
 
     {
         email: "student@gmail.com",
-        password: "$2b$10$Gj9dzs85Qw1qtvPDW7qBe.GZn1DyUhOIRriLokco5Xo.r1ZKMYS0u", // password= student
+        password: "$2b$10$Gj9dzs85Qw1qtvPDW7qBe.GZn1DyUhOIRriLokco5Xo.r1ZKMYS0u", // Email='student@gmail.com' Password='student'
         accountType: "student",
         status: true,
         phone: "0771234567",
@@ -36,8 +37,18 @@ const seedUsers=[
         lastName: "Senevirathne"
     },
     {
-        email: "student1@gmail.com",
-        password: "$2b$10$C64d4.mXuqJaESpkliJ2n.WYKro6amJplEoCdisevJSC2OIiDFlPS", // admin
+        email: "tempstudent@gmail.com",
+        password: "$2b$10$Gj9dzs85Qw1qtvPDW7qBe.GZn1DyUhOIRriLokco5Xo.r1ZKMYS0u", // (not activated yet)Email='tempstudent@gmail.com' Password='student'
+        accountType: "student",
+        status: false,
+        phone: "0771234567",
+        dateOfBirth: new Date(),
+        firstName: "Kolitha",
+        lastName: "Senevirathne"
+    },
+    {
+        email: "john@gmail.com",
+        password: "$2b$10$C64d4.mXuqJaESpkliJ2n.WYKro6amJplEoCdisevJSC2OIiDFlPS",
         accountType: "student",
         status: true,
         phone: "0771234567",
@@ -46,8 +57,8 @@ const seedUsers=[
         lastName: "Senevirathne"
     },
     {
-        email: "student2@gmail.com",
-        password: "$2b$10$C64d4.mXuqJaESpkliJ2n.WYKro6amJplEoCdisevJSC2OIiDFlPS", // admin
+        email: "mark@gmail.com",
+        password: "$2b$10$C64d4.mXuqJaESpkliJ2n.WYKro6amJplEoCdisevJSC2OIiDFlPS",
         accountType: "student",
         status: true,
         phone: "0771234567",
@@ -56,66 +67,76 @@ const seedUsers=[
         lastName: "Senevirathne"
     },
     {
-        email: "student3@gmail.com",
-        password: "$2b$10$C64d4.mXuqJaESpkliJ2n.WYKro6amJplEoCdisevJSC2OIiDFlPS", // admin
+        email: "ann@gmail.com",
+        password: "$2b$10$C64d4.mXuqJaESpkliJ2n.WYKro6amJplEoCdisevJSC2OIiDFlPS",
         accountType: "student",
         status: true,
         phone: "0771234567",
         dateOfBirth: new Date(),
-        firstName: "Kolitha",
-        lastName: "Senevirathne"
+        firstName: "Ann",
+        lastName: "Jane"
     },
     {
-        email: "student4@gmail.com",
-        password: "$2b$10$C64d4.mXuqJaESpkliJ2n.WYKro6amJplEoCdisevJSC2OIiDFlPS", // admin
+        email: "marry@gmail.com",
+        password: "$2b$10$C64d4.mXuqJaESpkliJ2n.WYKro6amJplEoCdisevJSC2OIiDFlPS",
         accountType: "student",
         status: true,
         phone: "0771234567",
         dateOfBirth: new Date(),
-        firstName: "Kolitha",
-        lastName: "Senevirathne"
+        firstName: "Marry",
+        lastName: "Fernando"
     },
     {
-        email: "student5@gmail.com",
-        password: "$2b$10$C64d4.mXuqJaESpkliJ2n.WYKro6amJplEoCdisevJSC2OIiDFlPS", // admin
+        email: "kate@gmail.com",
+        password: "$2b$10$C64d4.mXuqJaESpkliJ2n.WYKro6amJplEoCdisevJSC2OIiDFlPS",
         accountType: "student",
         status: true,
         phone: "0771234567",
         dateOfBirth: new Date(),
-        firstName: "Kolitha",
-        lastName: "Senevirathne"
+        firstName: "kate",
+        lastName: "Nickelson"
     },
     {
-        email: "student6@gmail.com",
-        password: "$2b$10$C64d4.mXuqJaESpkliJ2n.WYKro6amJplEoCdisevJSC2OIiDFlPS", // admin
+        email: "don@gmail.com",
+        password: "$2b$10$C64d4.mXuqJaESpkliJ2n.WYKro6amJplEoCdisevJSC2OIiDFlPS",
         accountType: "student",
         status: true,
         phone: "0771234567",
         dateOfBirth: new Date(),
-        firstName: "Kolitha",
-        lastName: "Senevirathne"
+        firstName: "don",
+        lastName: "john"
     },
     {
-        email: "student7@gmail.com",
-        password: "$2b$10$C64d4.mXuqJaESpkliJ2n.WYKro6amJplEoCdisevJSC2OIiDFlPS", // admin
+        email: "tom@gmail.com",
+        password: "$2b$10$C64d4.mXuqJaESpkliJ2n.WYKro6amJplEoCdisevJSC2OIiDFlPS",
         accountType: "student",
         status: true,
         phone: "0771234567",
         dateOfBirth: new Date(),
-        firstName: "Kolitha",
-        lastName: "Senevirathne"
+        firstName: "tom",
+        lastName: "perry"
+    },
+    {
+        email: "pete@gmail.com",
+        password: "$2b$10$C64d4.mXuqJaESpkliJ2n.WYKro6amJplEoCdisevJSC2OIiDFlPS",
+        accountType: "student",
+        status: true,
+        phone: "0771234567",
+        dateOfBirth: new Date(),
+        firstName: "pete",
+        lastName: "mark"
     }
-
 
 ];
 
 
 const seedDB = async () => {
     await User.deleteMany({});
+    await Note.deleteMany({});
     await User.insertMany(seedUsers);
 };
 console.log("Seeds inserted successfully")
 
-seedDB().then(() =>{
+seedDB().then(() => {
     mongoose.connection.close();
 });
