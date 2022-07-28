@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 const User = require("./Models/UserModel");
 const Note = require("./Models/NoteModel");
+const dotenv = require('dotenv');
+dotenv.config();
 
-
-mongoose.connect("mongodb://localhost:27017/noteDB", {
+mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })

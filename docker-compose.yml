@@ -1,0 +1,44 @@
+version: "3"
+services:
+
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    networks:
+      - mern-network
+    depends_on:
+      - server
+    command: npm start
+
+  
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 4000:4000
+    networks:
+      - mern-network
+    depends_on:
+      - db
+    command: sh -c "node seeder.js && npm start"
+
+  db:
+    image: mongo
+    ports:
+      - 27017:27017
+    networks:
+      - mern-network
+    volumes:
+      - mongo-data:/data/db 
+    
+ 
+
+
+networks:
+  mern-network:
+volumes:
+  mongo-data:

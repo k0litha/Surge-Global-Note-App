@@ -23,8 +23,8 @@ mongoose.connect(process.env.MONGO_URI,{
 .then (()=>{
     console.log("Connection Success")
 })
-.catch (()=>{
-    console.log(err.message);
+.catch ((e)=>{
+    console.log(e.message);
 });
 
 app.use(cors({
