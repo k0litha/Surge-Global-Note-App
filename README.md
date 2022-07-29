@@ -11,9 +11,8 @@ Notes are displayed as cards with cleaner and simple looking user interface. A s
 * Windows 10/11 OS.
 
 #### Installation
-* First move into the BACKEND directory.<br>`cd BACKEND`</br>
-* Then in the .env file, change the `MONGO_URI` host name to `db` as follows,<br>`MONGO_URI="mongodb://localhost:27017/noteDB"`</br>to,<br>`MONGO_URI="mongodb://db:27017/noteDB"`</br>
-* Then go back to parent directory and run the following command.<br>`docker-compose up`</br>
+
+* In the parent directory, run the following command.<br>`docker-compose up`</br>
 * Finally open http://localhost:3000 to view it in your browser
 * Use the following credentials to test the application.<br>`ADMIN: email='admin@gmail.com'  password='admin'`</br><br>`STUDENT: email='student@gmail.com'  password='student'`</br><br>`STUDENT(First time login): email='tempstudent@gmail.com'  password='student'`</br>
 
@@ -35,7 +34,7 @@ Notes are displayed as cards with cleaner and simple looking user interface. A s
 #### Server installation
 * Now move into the BACKEND directory.<br>`cd BACKEND`</br>
 * Then install all the dependencies for the server.<br>`npm install`</br>
-* Configure the .env variables as needed (Configure Nodemailer, page sizes, JWT key and etc...).
+* Configure the .env variables as needed (Configure Nodemailer, page sizes,Mongo uri, JWT key and etc...).
 * In the same directory run the following command to start the server.<br>`npm start`</br>
 
 #### Seed database
