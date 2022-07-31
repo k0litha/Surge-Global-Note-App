@@ -10,7 +10,7 @@ services:
     networks:
       - mern-network
     depends_on:
-      - server
+      - backend
     command: npm start
 
   
