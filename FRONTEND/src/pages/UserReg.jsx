@@ -54,12 +54,12 @@ export default function UserReg() {
             <br></br>
             <Form.Label>First Name</Form.Label>
             <Form.Control onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
-              name="firstname" type="text" placeholder="firstname" />
+              name="firstName" type="text" placeholder="firstname" />
             <Form.Text className="text-muted" > </Form.Text>
             <br></br>
             <Form.Label>Last Name</Form.Label>
             <Form.Control onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
-              name="lastname" type="text" placeholder="lastname" />
+              name="lastName" type="text" placeholder="lastname" />
             <Form.Text className="text-muted"> </Form.Text>
             <br></br>
             <Form.Label>New Password</Form.Label>

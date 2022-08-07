@@ -33,8 +33,8 @@ export default function AdminHome() {
       setPages(result.data.pages)
     } catch (error) {
       if (error.message.includes("401") || error.message.includes("403")) {
-        window.location.replace = 'http://localhost:4000/logout';
-        return false;
+        window.location.replace('http://localhost:4000/logout');
+    return false;
       }
     }
   };
@@ -48,8 +48,8 @@ export default function AdminHome() {
       setUsers(result.data.users)
     } catch (error) {
       if (error.message.includes("401") || error.message.includes("403")) {
-        window.location.replace = 'http://localhost:4000/logout';
-        return false;
+        window.location.replace('http://localhost:4000/logout');
+    return false;
       }
     }
   };

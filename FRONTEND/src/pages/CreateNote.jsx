@@ -44,7 +44,7 @@ export default function CreateNote() {
       }
     } catch (err) {
       if (err.message.includes("401") || err.message.includes("403")) {
-        window.location.replace = 'http://localhost:4000/logout';
+        window.location.replace('http://localhost:4000/logout');
         return false;
       }
     }

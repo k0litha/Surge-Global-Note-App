@@ -14,7 +14,7 @@ router.get("/usersearch/:item",checkAdmin,userSearch);
 router.post("/userReg/:id",checkUser,userUpdate);
 
 //user logout
-router.get("/logout",checkUser,logout);
+router.get("/logout",logout);
 
 //user login
 router.post("/login",login);
